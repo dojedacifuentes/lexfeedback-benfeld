@@ -1,6 +1,6 @@
-# LexFeedback · Demo Académica
+# LexFeedback Benfeld
 
-Plataforma web para que el **Profesor David Quintero Fuentes** (Filosofía del Derecho, PUCV) genere retroalimentaciones individuales en PDF a partir de textos ya corregidos.
+Demo académica personalizada para el **Profesor Johann Benfeld Escobar** (Filosofía del Derecho, PUCV), orientada a facilitar la generación de retroalimentaciones individuales en evaluaciones de Filosofía del Derecho.
 
 Demo creada por **Diego Ojeda**, Ayudante de Filosofía del Derecho PUCV.
 
@@ -8,14 +8,19 @@ Demo creada por **Diego Ojeda**, Ayudante de Filosofía del Derecho PUCV.
 
 ## Características
 
-- Ingreso manual de: nombre del estudiante, número de prueba, puntaje total
-- Conversión automática de puntaje a nota según tres escalas (51%, 60%, 65%)
-- Matriz de notas integrada en el código — **no requiere cargar ningún archivo Excel**
+- Ingreso manual de: nombre del estudiante, número de prueba, puntaje obtenido
+- Calculadora dinámica de notas: escala lineal por dos tramos (compatible con escaladenotas.cl)
+- Puntaje máximo configurable (20, 25, 40, 100, etc.)
+- Exigencia configurable con presets 51 %, 60 %, 65 % o valor libre
+- Configuración avanzada: nota mínima, aprobación, máxima y modo de redondeo
 - Nota final editable manualmente (con opción de restaurar la automática)
 - Exportación a PDF formal, con soporte para textos largos y paginación automática
+- Exportación a Word (.docx)
+- Vista previa del documento antes de exportar
+- Panel de envío por correo (mailto — sin backend)
 - Botón "Limpiar para siguiente estudiante" que conserva escala y fecha
 - Sin backend · Sin login · Sin envío de datos externos
-- Procesamiento 100% local en el navegador
+- Procesamiento 100 % local en el navegador
 
 ---
 
@@ -27,7 +32,7 @@ Demo creada por **Diego Ojeda**, Ayudante de Filosofía del Derecho PUCV.
 | Vite 6 | Bundler |
 | TailwindCSS 3 | Estilos |
 | jsPDF | Generación de PDF |
-| Lucide React | Íconos |
+| docx | Generación de Word |
 
 ---
 
@@ -53,42 +58,33 @@ Abre [http://localhost:5173](http://localhost:5173) en el navegador.
 
 ## Despliegue en Vercel
 
-### Opción 1 — Interfaz web de Vercel
-
 1. Sube el proyecto a un repositorio GitHub
 2. En [vercel.com/new](https://vercel.com/new) importa el repositorio
-3. Vercel detecta Vite automáticamente:
-   - **Framework Preset:** Vite
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
+3. Vercel detecta Vite automáticamente — sin configuración adicional
 4. Haz clic en **Deploy**
 
-### Opción 2 — CLI de Vercel
-
-```bash
-npm i -g vercel
-vercel
-```
-
-Responde las preguntas del asistente. El proyecto no requiere variables de entorno.
+El proyecto no requiere variables de entorno.
 
 ---
 
 ## Estructura del proyecto
 
 ```
-lexfeedback/
+lexfeedback-benfeld/
 ├── src/
 │   ├── data/
-│   │   └── gradeScale.ts      # Matriz de notas (0–100 × 3 escalas)
+│   │   └── gradeScale.ts          # Wrapper de compatibilidad
 │   ├── utils/
-│   │   └── pdfExport.ts       # Generación de PDF con jsPDF
+│   │   ├── gradeCalculator.ts     # Motor de cálculo dinámico
+│   │   ├── pdfExport.ts           # Generación de PDF
+│   │   └── wordExport.ts          # Generación de Word
 │   ├── components/
 │   │   ├── Header.tsx
-│   │   ├── EvaluationForm.tsx
+│   │   ├── EvaluationForm.tsx     # Formulario con configuración de escala
 │   │   ├── FeedbackPanel.tsx
 │   │   ├── DocumentPreview.tsx
 │   │   ├── ActionButtons.tsx
+│   │   ├── EmailPanel.tsx
 │   │   └── Footer.tsx
 │   ├── types/
 │   │   └── index.ts
@@ -96,11 +92,9 @@ lexfeedback/
 │   ├── main.tsx
 │   └── index.css
 ├── public/
-│   └── favicon.svg
 ├── index.html
 ├── vite.config.ts
 ├── tailwind.config.js
-├── tsconfig*.json
 └── package.json
 ```
 
@@ -108,12 +102,13 @@ lexfeedback/
 
 ## Notas de uso
 
-- La escala **51%** viene seleccionada por defecto
+- La escala **51 %** viene seleccionada por defecto con puntaje máximo 100
 - El puntaje debe ingresarse **manualmente** (la app no lo detecta desde el texto)
 - La nota se puede editar manualmente; un badge indica si fue "auto" o "manual"
-- El PDF respeta los saltos de línea del texto pegado
+- El PDF y el Word respetan los saltos de línea del texto pegado
+- "Limpiar" borra los datos del estudiante pero conserva la configuración de escala
 - Los datos no se almacenan ni se envían a ningún servidor
 
 ---
 
-*LexFeedback — Demo académica · PUCV · Filosofía del Derecho*
+*LexFeedback Benfeld — Demo académica · PUCV · Filosofía del Derecho*

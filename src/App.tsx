@@ -13,7 +13,7 @@ import type { AppConfig, EvaluationData, ScaleConfig } from './types';
 import { DEFAULT_SCALE_CONFIG } from './types';
 
 const BASE_CONFIG = {
-  professor:     'Profesor Quintero Fuentes',
+  professor:     'Profesor Johann Benfeld Escobar',
   createdBy:     'Diego Ojeda',
   createdByRole: 'Ayudante de Filosofía del Derecho PUCV',
 };
@@ -23,7 +23,7 @@ function getTodayISO(): string {
 }
 
 export default function App() {
-  const [subject,      setSubject]      = useState('');
+  const [subject,      setSubject]      = useState('Filosofía del Derecho');
   const [studentName,  setStudentName]  = useState('');
   const [testNumber,   setTestNumber]   = useState('');
   const [totalScore,   setTotalScore]   = useState('');
