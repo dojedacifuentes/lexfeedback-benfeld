@@ -37,3 +37,53 @@ export interface EvaluationData {
   feedback:      string;
   date:          string;
 }
+
+// ── Interrogación oral ───────────────────────────────────────────────────────
+
+export const ORAL_CRITERIA_LABELS: readonly string[] = [
+  'Claridad y precisión conceptual',
+  'Dominio de la materia',
+  'Capacidad argumentativa',
+  'Coherencia en el desarrollo',
+  'Uso de terminología jurídica',
+  'Fundamentación teórica',
+  'Respuesta a preguntas de seguimiento',
+  'Capacidad de síntesis',
+  'Orden y metodología expositiva',
+  'Relaciona el tema con el contexto normativo',
+] as const;
+
+export interface OralCriteria {
+  label:   string;
+  checked: boolean;
+}
+
+export interface OralQuestion {
+  id:          string;
+  topic:       string;
+  maxScore:    string;
+  score:       string;
+  observation: string;
+  criteria:    OralCriteria[];
+}
+
+export interface OralMilestone {
+  id:          string;
+  elapsed:     string;   // "MM:SS" o "HH:MM:SS"
+  description: string;
+}
+
+export interface OralExamData {
+  studentName:         string;
+  date:                string;
+  questions:           OralQuestion[];
+  totalScore:          string;    // puntaje efectivo al momento de exportar
+  totalMaxScore:       string;    // máximo efectivo al momento de exportar
+  useSumFromQuestions: boolean;
+  scaleConfig:         ScaleConfig;
+  finalGrade:          string;
+  isManualGrade:       boolean;
+  generalObservation:  string;
+  milestones:          OralMilestone[];
+  duration:            string;    // tiempo transcurrido al exportar
+}
